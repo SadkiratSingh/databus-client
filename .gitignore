@@ -1,4 +1,5 @@
 .idea/
 *.iml
 target/
+errorLog.log
 #/home/eisenbahnplatte/git/databus-client/src/resources/databus-client_testbed/*/*/*

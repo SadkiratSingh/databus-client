@@ -1,0 +1,92 @@
+PREFIX dataid: <http://dataid.dbpedia.org/ns/core#>
+PREFIX dataid-cv: <http://dataid.dbpedia.org/ns/cv#>
+PREFIX dataid-mt: <http://dataid.dbpedia.org/ns/mt#>
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX dcat:  <http://www.w3.org/ns/dcat#>
+
+# Get latest ontology NTriples file 
+SELECT DISTINCT ?file WHERE {
+	?dataset dcat:distribution ?distribution .
+    ?distribution dcat:downloadURL ?file .
+    ?distribution dcat:mediaType dataid-mt:ApplicationNTriples . 
+    {
+        ?dataset dataid:artifact <https://databus.dbpedia.org/dbpedia/generic/categories> .
+        {
+            ?distribution dct:hasVersion ?version {
+                SELECT (?v as ?version) { 
+                    ?dataset dataid:artifact <https://databus.dbpedia.org/dbpedia/generic/categories> . 
+                    ?dataset dct:hasVersion ?v . 
+                } ORDER BY DESC (?version) LIMIT 1 
+            }
+        }
+        { ?distribution <http://dataid.dbpedia.org/ns/cv#lang> 'en'^^<http://www.w3.org/2001/XMLSchema#string> . }
+    }
+	UNION
+    {
+        ?dataset dataid:artifact <https://databus.dbpedia.org/dbpedia/generic/disambiguations> .
+        {
+            ?distribution dct:hasVersion ?version {
+                SELECT (?v as ?version) { 
+                    ?dataset dataid:artifact <https://databus.dbpedia.org/dbpedia/generic/disambiguations> . 
+                    ?dataset dct:hasVersion ?v . 
+                } ORDER BY DESC (?version) LIMIT 1 
+            }
+        }
+        { ?distribution <http://dataid.dbpedia.org/ns/cv#lang> 'en'^^<http://www.w3.org/2001/XMLSchema#string> . }
+    }
+    UNION
+    {
+        ?dataset dataid:artifact <https://databus.dbpedia.org/dbpedia/generic/labels> .				
+        {
+            ?distribution dct:hasVersion ?version {
+                SELECT (?v as ?version) { 
+                    ?dataset dataid:artifact <https://databus.dbpedia.org/dbpedia/generic/labels> . 
+                    ?dataset dct:hasVersion ?v . 
+                } ORDER BY DESC (?version) LIMIT 1 
+            }
+        }
+        { ?distribution <http://dataid.dbpedia.org/ns/cv#lang> 'en'^^<http://www.w3.org/2001/XMLSchema#string> . }
+    }
+    UNION
+    {
+        ?dataset dataid:artifact <https://databus.dbpedia.org/dbpedia/generic/redirects> .
+        {
+            ?distribution dct:hasVersion ?version {
+                SELECT (?v as ?version) { 
+                    ?dataset dataid:artifact <https://databus.dbpedia.org/dbpedia/generic/redirects> . 
+                    ?dataset dct:hasVersion ?v . 
+                } ORDER BY DESC (?version) LIMIT 1 
+            }
+        }
+        { ?distribution <http://dataid.dbpedia.org/ns/cv#lang> 'en'^^<http://www.w3.org/2001/XMLSchema#string> . }
+    }
+    UNION
+    {
+        ?dataset dataid:artifact <https://databus.dbpedia.org/dbpedia/generic/wikipedia-links> .
+        {
+            ?distribution dct:hasVersion ?version {
+                SELECT (?v as ?version) { 
+                    ?dataset dataid:artifact <https://databus.dbpedia.org/dbpedia/generic/wikipedia-links> . 
+                    ?dataset dct:hasVersion ?v . 
+                } ORDER BY DESC (?version) LIMIT 1 
+            }
+        }
+        { ?distribution <http://dataid.dbpedia.org/ns/cv#lang> 'en'^^<http://www.w3.org/2001/XMLSchema#string> . }
+    }
+    UNION
+    {
+        ?dataset dataid:group <https://databus.dbpedia.org/dbpedia/mappings> .
+		{ ?distribution <http://dataid.dbpedia.org/ns/cv#lang> 'en'^^<http://www.w3.org/2001/XMLSchema#string> . }
+        {
+            ?dataset dataid:artifact <https://databus.dbpedia.org/dbpedia/mappings/specific-mappingbased-properties> .
+            {
+                ?distribution dct:hasVersion ?version {
+                    SELECT (?v as ?version) { 
+                        ?dataset dataid:artifact <https://databus.dbpedia.org/dbpedia/mappings/specific-mappingbased-properties> . 
+                        ?dataset dct:hasVersion ?v . 
+                    } ORDER BY DESC (?version) LIMIT 1 
+                }
+            }
+		}
+    }
+}
