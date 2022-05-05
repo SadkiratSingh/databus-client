@@ -100,5 +100,17 @@ SELECT DISTINCT ?file WHERE {
                 }
             }
         }
+        UNION
+        {
+            ?dataset dataid:artifact <https://databus.dbpedia.org/dbpedia/mappings/mappingbased-literals> .
+            {
+                ?distribution dct:hasVersion ?version {
+                    SELECT (?v as ?version) { 
+                        ?dataset dataid:artifact <https://databus.dbpedia.org/dbpedia/mappings/mappingbased-literals> . 
+                        ?dataset dct:hasVersion ?v . 
+                    } ORDER BY DESC (?version) LIMIT 1 
+                }
+            }
+        }
     }
 }
